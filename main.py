@@ -4,9 +4,9 @@ from fastapi import FastAPI
 
 from LLM import load_documents, get_answer
 from message import add_message
-from models import Message, RequestModel
+from schemas import Message, RequestModel
 
-os.environ["OPENAI_API_KEY"] = "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"
+os.environ["OPENAI_API_KEY"] = "your_api_key_here"
 
 app = FastAPI()
 documents = load_documents()

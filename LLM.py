@@ -1,12 +1,14 @@
+import json
+
 from langchain import PromptTemplate
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.chains.question_answering import load_qa_chain
 from langchain.llms import OpenAI
 
-
-template = """You are given the data from Slack channels. Use the id to get person's and Slack channel's name.
+template = """You are given the data from Slack channels and article. 
+Use the id to get the person's name and Slack channel's name.
 Use the following pieces of context to answer the question at the end. 
-The answer should be short and specific.{context}
+The answer should be short, exact and specific.{context}
 Q:{question}
 A:"""
 PROMPT = PromptTemplate(template=template, input_variables=["context", "question"])
@@ -25,7 +27,11 @@ def load_documents():
 
     with open('data/data1.json') as f1:
         slack = f1.read()
-    slack_texts = text_splitter.create_documents([slack])
+
+    sList = json.loads(slack)
+    for i in range(len(sList)):
+        sList[i] = str(sList[i]).replace("\'", "")
+    slack_texts = text_splitter.create_documents([sList])
 
     for i in range(len(slack_texts)):
         texts.append(slack_texts[i])

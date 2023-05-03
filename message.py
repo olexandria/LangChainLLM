@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from LLM import text_splitter
-from models import Message
+from schemas import Message
 
 
 def add_message(request: Message, documents: list):
